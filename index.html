@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MI APP STORE - A Project of Muslim Islam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           ROOT VARIABLES & THEME CONFIGURATION (NETFLIX STYLE DARK NEON)
+           ========================================================================== */
+        :root {
+            --bg-color: #0b0b0b;
+            --surface-color: #141414;
+            --primary-red: #E50914;
+            --neon-glow: 0 0 15px rgba(229, 9, 20, 0.6), 0 0 30px rgba(229, 9, 20, 0.4);
+            --rainbow-glow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.5);
+            --text-main: #ffffff;
+            --text-muted: #b3b3b3;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        /* ==========================================================================
+           GLOBAL RESET & BASIC TYPOGRAPHY
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at top, #1a1a1a 0%, var(--bg-color) 70%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 4px; }
+
+        /* ==========================================================================
+           HEADER & NAVIGATION
+           ========================================================================== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 11, 11, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            box-shadow: var(--rainbow-glow);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .brand h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-bar {
+            position: relative;
+            width: 400px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            background: var(--surface-color);
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition-speed);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary-red);
+            box-shadow: var(--neon-glow);
+        }
+
+        /* ==========================================================================
+           MAIN CONTENT AREA
+           ========================================================================== */
+        main {
+            margin-top: 100px;
+            padding: 20px 50px;
+            min-height: 80vh;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-red);
+            padding-left: 10px;
+        }
+
+        /* ==========================================================================
+           APP GRID & 3D CARDS
+           ========================================================================== */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .app-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10.01%);
+            background-size: 20px 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: var(--neon-glow);
+            border-color: var(--primary-red);
+        }
+
+        .app-card:hover::before { opacity: 1; }
+
+        .app-card img.icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .app-card h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .app-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .app-card .category-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 4px 8px;
+            background: rgba(229, 9, 20, 0.2);
+            color: var(--primary-red);
+            border-radius: 10px;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           APP DETAILS VIEW (Dynamic Page)
+           ========================================================================== */
+        #app-detail-view {
+            display: none;
+            background: var(--surface-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 20px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.5s ease;
+        }
+
+        .detail-header {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .detail-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 25px;
+            box-shadow: var(--rainbow-glow);
+        }
+
+        .detail-info h2 {
+            font-size: 36px;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .btn-download, .btn-share {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-speed);
+            margin-right: 15px;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-download {
+            background: var(--primary-red);
+            color: white;
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+        }
+
+        .btn-download:hover { background: #ff0f1a; transform: scale(1.05); }
+
+        .btn-share {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        .btn-share:hover { background: rgba(255,255,255,0.1); }
+
+        .screenshots {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .screenshots img {
+            height: 300px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+        .screenshots img:hover { transform: scale(1.02); }
+
+        /* iframe container for non-apk links */
+        #webview-container {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 15px;
+            display: none;
+            margin-top: 20px;
+            background: #fff; /* WebView needs white bg usually */
+        }
+
+        /* ==========================================================================
+           REVIEWS & RATING SYSTEM
+           ========================================================================== */
+        .reviews-section { margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        .review-box { background: var(--bg-color); padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .review-box .admin-reply { margin-top: 10px; padding: 10px; background: rgba(229, 9, 20, 0.1); border-left: 3px solid var(--primary-red); }
+        .star-rating { color: gold; font-size: 20px; cursor: pointer; }
+        .feedback-form { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .feedback-form textarea { width: 100%; height: 80px; background: var(--bg-color); color: white; border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; }
+
+        /* ==========================================================================
+           ADMIN PANEL (Khufiya)
+           ========================================================================== */
+        #admin-panel {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            padding: 50px;
+            overflow-y: auto;
+        }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--primary-red); padding-bottom: 10px; margin-bottom: 20px; }
+        .admin-stats { display: flex; gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--surface-color); padding: 20px; border-radius: 10px; flex: 1; text-align: center; border: 1px solid var(--border-color); }
+        .stat-card h3 { font-size: 30px; color: var(--primary-red); }
+        
+        .admin-form-group { margin-bottom: 15px; }
+        .admin-form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); }
+        .admin-form-group input, .admin-form-group select { width: 100%; padding: 10px; border-radius: 5px; border: none; background: #222; color: white; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .admin-table th, .admin-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; }
+
+        /* Khufiya Lock Icon */
+        #secret-lock {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 24px;
+            opacity: 0.1; /* Almost invisible */
+            cursor: default;
+            z-index: 9999;
+            transition: opacity 0.3s;
+        }
+        #secret-lock:hover { opacity: 0.5; }
+
+        /* ==========================================================================
+           ANIMATIONS
+           ========================================================================== */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+
+    <div id="secret-lock" onclick="promptAdmin()">🔒</div>
+
+    <header>
+        <div class="brand" onclick="goHome()">
+            <img src="https://i.ibb.co/JR6R1CNV/file-00000000a26c7208993f599787b17b9d-removebg-preview.png" alt="MI App Store Logo">
+            <h1>MI APP STORE</h1>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search apps, games, tools..." onkeyup="searchApps()">
+        </div>
+    </header>
+
+    <main>
+        <div id="home-view">
+            <h2 class="section-title">Trending Apps</h2>
+            <div class="app-grid" id="apps-container">
+                </div>
+        </div>
+
+        <div id="app-detail-view">
+            <button onclick="goHome()" style="background:none; border:none; color:white; font-size:16px; cursor:pointer; margin-bottom:20px;">&larr; Back to Home</button>
+            <div class="detail-header" id="detail-header-content">
+                </div>
+            
+            <h3 class="section-title" style="font-size:20px;">Screenshots</h3>
+            <div class="screenshots" id="detail-screenshots">
+                </div>
+
+            <iframe id="webview-container"></iframe>
+
+            <div class="reviews-section">
+                <h3 class="section-title" style="font-size:20px;">User Feedback</h3>
+                <div class="star-rating" id="rating-input">
+                    <span onclick="setRating(1)">★</span><span onclick="setRating(2)">★</span><span onclick="setRating(3)">★</span><span onclick="setRating(4)">★</span><span onclick="setRating(5)">★</span>
+                </div>
+                <div class="feedback-form">
+                    <textarea id="review-text" placeholder="Write your review here... (Urdu ya English mein)"></textarea>
+                    <button class="btn-download" style="padding: 8px 15px; width:150px; font-size:14px;" onclick="submitReview()">Submit Review</button>
+                </div>
+                <div id="reviews-list" style="margin-top: 20px;">
+                    </div>
+            </div>
+
+            <h3 class="section-title" style="margin-top:40px; font-size:20px;">Recommended for you</h3>
+            <div class="app-grid" id="recommended-container">
+                </div>
+        </div>
+    </main>
+
+    <div id="admin-panel">
+        <div class="admin-header">
+            <h2>Admin Dashboard - MI App Store</h2>
+            <button onclick="closeAdmin()" class="btn-share" style="border-color:var(--primary-red); color:var(--primary-red);">Exit Panel</button>
+        </div>
+        
+        <div class="admin-stats">
+            <div class="stat-card">
+                <h3 id="stat-total-apps">0</h3>
+                <p>Total Apps</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="stat-total-downloads">0</h3>
+                <p>Total Downloads</p>
+            </div>
+        </div>
+
+        <div style="display:flex; gap:30px;">
+            <div style="flex:1; background:var(--surface-color); padding:20px; border-radius:10px;">
+                <h3 style="margin-bottom:15px;">Add New App (Manual/JSON)</h3>
+                <div class="admin-form-group">
+                    <label>App Name</label>
+                    <input type="text" id="admin-app-name">
+                </div>
+                <div class="admin-form-group">
+                    <label>App Category</label>
+                    <select id="admin-app-category">
+                        <option value="Tools">Tools</option>
+                        <option value="Streaming">Streaming</option>
+                        <option value="Islamic">Islamic</option>
+                        <option value="Games">Games</option>
+                        <option value="Social">Social / Chat</option>
+                    </select>
+                </div>
+                <div class="admin-form-group">
+                    <label>Icon URL (imgbb/github link)</label>
+                    <input type="text" id="admin-app-icon">
+                </div>
+                <div class="admin-form-group">
+                    <label>Download Link (.apk or web URL)</label>
+                    <input type="text" id="admin-app-link">
+                </div>
+                <div class="admin-form-group">
+                    <label>Screenshots URLs (comma separated)</label>
+                    <input type="text" id="admin-app-screens">
+                </div>
+                <button class="btn-download" onclick="addAppToDatabase()">Add App</button>
+                
+                <hr style="border-color:#333; margin: 20px 0;">
+                <label style="color:var(--text-muted); font-size:12px;">Or Paste JSON Array</label>
+                <textarea id="admin-json-input" style="width:100%; height:100px; background:#222; color:white; margin-bottom:10px;"></textarea>
+                <button class="btn-share" onclick="importJSON()">Import JSON</button>
+            </div>
+
+            <div style="flex:2; background:var(--surface-color); padding:20px; border-radius:10px; max-height: 500px; overflow-y:auto;">
+                <h3 style="margin-bottom:15px;">Manage Database</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Name</th>
+                            <th>Downloads</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-apps-list">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           FIREBASE INITIALIZATION (Your Provided Credentials)
+           ========================================================================== */
+        const firebaseConfig = {
+            apiKey: "AIzaSyBbnU8DkthpYQMHOLLyj6M0cc05qXfjMcw",
+            databaseURL: "https://ramadan-2385b-default-rtdb.firebaseio.com",
+            projectId: "ramadan-2385b"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Global Variables
+        let appsData = {};
+        let currentAppId = null;
+        let selectedRating = 5;
+
+        // On Load Logic
+        window.onload = () => {
+            fetchApps();
+            checkUrlParameters();
+        };
+
+        /* ==========================================================================
+           CORE LOGIC: FETCH & RENDER APPS
+           ========================================================================== */
+        function fetchApps() {
+            db.ref('apps').on('value', (snapshot) => {
+                appsData = snapshot.val() || {};
+                renderAppGrid(appsData);
+                updateAdminStats();
+                renderAdminList();
+            });
+        }
+
+        function renderAppGrid(data) {
+            const container = document.getElementById('apps-container');
+            container.innerHTML = '';
+            
+            for (let key in data) {
+                const app = data[key];
+                const card = document.createElement('div');
+                card.className = 'app-card';
+                card.onclick = () => openAppDetails(key);
+                card.innerHTML = `
+                    <img src="${app.icon || 'https://via.placeholder.com/80'}" class="icon" alt="${app.name}">
+                    <h3>${app.name}</h3>
+                    <p>${app.downloads || 0} Downloads</p>
+                    <span class="category-badge">${app.category}</span>
+                `;
+                container.appendChild(card);
+            }
+        }
+
+        /* ==========================================================================
+           ROUTING & APP DETAILS LOGIC (Realtime Sharing via URL)
+           ========================================================================== */
+        function checkUrlParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const appId = urlParams.get('app');
+            if (appId) {
+                // Short delay to ensure Firebase data is loaded
+                setTimeout(() => { if(appsData[appId]) openAppDetails(appId); }, 1000);
+            }
+        }
+
+        function openAppDetails(id) {
+            currentAppId = id;
+            const app = appsData[id];
+            
+            // Update URL without reloading page for sharing
+            window.history.pushState({}, '', `?app=${id}`);
+
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('app-detail-view').style.display = 'block';
+
+            // Populate Header
+            const header = document.getElementById('detail-header-content');
+            header.innerHTML = `
+                <img src="${app.icon}">
+                <div class="detail-info">
+                    <h2>${app.name}</h2>
+                    <span class="category-badge" style="margin-bottom:10px;">${app.category}</span>
+                    <p style="color:var(--text-muted)">Session ID: ${id}</p>
+                    <div>
+                        <button class="btn-download" onclick="startDownload('${id}', '${app.link}')">
+                            <span style="font-size:20px;">⬇</span> Download Now
+                        </button>
+                        <button class="btn-share" onclick="copyShareLink()">🔗 Share</button>
+                    </div>
+                </div>
+            `;
+
+            // Populate Screenshots
+            const screensContainer = document.getElementById('detail-screenshots');
+            screensContainer.innerHTML = '';
+            if (app.screenshots) {
+                const screens = app.screenshots.split(',');
+                screens.forEach(s => {
+                    screensContainer.innerHTML += `<img src="${s.trim()}">`;
+                });
+            }
+
+            // Load Recommendations based on category
+            loadRecommendations(app.category, id);
+            
+            // Load Reviews
+            loadReviews(id);
+
+            // Reset webview
+            document.getElementById('webview-container').style.display = 'none';
+            document.getElementById('webview-container').src = '';
+        }
+
+        function goHome() {
+            window.history.pushState({}, '', window.location.pathname);
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('app-detail-view').style.display = 'none';
+        }
+
+        /* ==========================================================================
+           DOWNLOAD LOGIC (Vercel API vs Webview)
+           ========================================================================== */
+        function startDownload(id, link) {
+            // Increment download counter in Firebase Realtime Database
+            const currentDownloads = appsData[id].downloads || 0;
+            db.ref(`apps/${id}/downloads`).set(currentDownloads + 1);
+
+            if (link.toLowerCase().endsWith('.apk')) {
+                // Request fast download via Vercel Serverless Function
+                window.location.href = `/api/download?url=${encodeURIComponent(link)}`;
+            } else {
+                // If it's a website link (like Mi Chat web), load in iframe
+                const webview = document.getElementById('webview-container');
+                webview.style.display = 'block';
+                webview.src = link;
+                webview.scrollIntoView({behavior: 'smooth'});
+            }
+        }
+
+        function copyShareLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Link Copied! Apne doston ke sath share karein.");
+            });
+        }
+
+        /* ==========================================================================
+           SEARCH & RECOMMENDATIONS LOGIC
+           ========================================================================== */
+        function searchApps() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredData = {};
+            for (let key in appsData) {
+                if (appsData[key].name.toLowerCase().includes(query)) {
+                    filteredData[key] = appsData[key];
+                }
+            }
+            renderAppGrid(filteredData);
+            if(document.getElementById('home-view').style.display === 'none') {
+                goHome(); // return to home to see search results
+            }
+        }
+
+        function loadRecommendations(category, excludeId) {
+            const container = document.getElementById('recommended-container');
+            container.innerHTML = '';
+            for (let key in appsData) {
+                if (appsData[key].category === category && key !== excludeId) {
+                    const app = appsData[key];
+                    container.innerHTML += `
+                        <div class="app-card" onclick="openAppDetails('${key}')">
+                            <img src="${app.icon}" class="icon">
+                            <h3>${app.name}</h3>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        /* ==========================================================================
+           RATING & REVIEW SYSTEM
+           ========================================================================== */
+        function setRating(val) {
+            selectedRating = val;
+            const stars = document.getElementById('rating-input').children;
+            for(let i=0; i<5; i++) {
+                stars[i].style.color = i < val ? 'gold' : '#555';
+            }
+        }
+
+        function submitReview() {
+            const text = document.getElementById('review-text').value;
+            if(!text) return alert("Please likhein ke app kaisi lagi.");
+            
+            const reviewRef = db.ref(`reviews/${currentAppId}`).push();
+            reviewRef.set({
+                rating: selectedRating,
+                text: text,
+                timestamp: Date.now(),
+                adminReply: ""
+            });
+            document.getElementById('review-text').value = '';
+            alert("Feedback saved!");
+        }
+
+        function loadReviews(appId) {
+            const container = document.getElementById('reviews-list');
+            db.ref(`reviews/${appId}`).on('value', snapshot => {
+                container.innerHTML = '';
+                const reviews = snapshot.val();
+                for(let key in reviews) {
+                    const rev = reviews[key];
+                    const stars = '★'.repeat(rev.rating) + '☆'.repeat(5-rev.rating);
+                    let html = `
+                        <div class="review-box">
+                            <span style="color:gold;">${stars}</span>
+                            <p style="margin-top:5px;">${rev.text}</p>
+                    `;
+                    if(rev.adminReply) {
+                        html += `<div class="admin-reply"><strong>Admin (Maaz):</strong> ${rev.adminReply}</div>`;
+                    }
+                    html += `</div>`;
+                    container.innerHTML += html;
+                }
+            });
+        }
+
+        /* ==========================================================================
+           ADMIN PANEL LOGIC (Protected via Lock Icon)
+           ========================================================================== */
+        function promptAdmin() {
+            const pass = prompt("Enter Admin Password:");
+            if (pass === "123456") {
+                document.getElementById('admin-panel').style.display = 'block';
+            } else if(pass !== null) {
+                alert("Wrong Password!");
+            }
+        }
+
+        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+
+        function updateAdminStats() {
+            const appCount = Object.keys(appsData).length;
+            let dlCount = 0;
+            for(let key in appsData) { dlCount += (appsData[key].downloads || 0); }
+            document.getElementById('stat-total-apps').innerText = appCount;
+            document.getElementById('stat-total-downloads').innerText = dlCount;
+        }
+
+        function renderAdminList() {
+            const tbody = document.getElementById('admin-apps-list');
+            tbody.innerHTML = '';
+            for(let key in appsData) {
+                const app = appsData[key];
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${app.icon}" width="30" style="border-radius:5px;"></td>
+                        <td>${app.name}</td>
+                        <td>${app.downloads || 0}</td>
+                        <td>
+                            <button onclick="deleteApp('${key}')" style="background:red; color:white; border:none; padding:5px; border-radius:3px; cursor:pointer;">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function addAppToDatabase() {
+            const name = document.getElementById('admin-app-name').value;
+            const cat = document.getElementById('admin-app-category').value;
+            const icon = document.getElementById('admin-app-icon').value;
+            const link = document.getElementById('admin-app-link').value;
+            const screens = document.getElementById('admin-app-screens').value;
+
+            if(!name || !link) return alert("Name aur Link zaruri hain!");
+
+            const sessionId = "app_" + Date.now();
+            db.ref('apps/' + sessionId).set({
+                name: name, category: cat, icon: icon, link: link, screenshots: screens, downloads: 0
+            });
+            alert("App Added to Database!");
+            
+            // Clear inputs
+            document.querySelectorAll('.admin-form-group input').forEach(inp => inp.value = '');
+        }
+
+        function importJSON() {
+            try {
+                const jsonStr = document.getElementById('admin-json-input').value;
+                const arr = JSON.parse(jsonStr);
+                arr.forEach(app => {
+                    const sessionId = "app_" + Math.random().toString(36).substr(2, 9);
+                    app.downloads = 0;
+                    db.ref('apps/' + sessionId).set(app);
+                });
+                alert("JSON Imported Successfully!");
+                document.getElementById('admin-json-input').value = '';
+            } catch(e) {
+                alert("Invalid JSON format!");
+            }
+        }
+
+        function deleteApp(id) {
+            if(confirm("Are you sure you want to delete this app?")) {
+                db.ref('apps/' + id).remove();
+                db.ref('reviews/' + id).remove(); // Delete associated reviews
+            }
+        }
+
+        /* Simulate F-Droid Fetcher (Optional: Agar aap auto fetch karna chahein)
+           Is function ko admin panel me button lagakar call kar sakte hain 
+           agar CORS allow ho.
+        */
+        async function fetchFDroidRepo(repoUrl) {
+            try {
+                // Using a proxy to avoid CORS if necessary
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(repoUrl)}`);
+                const data = await response.json();
+                const parsed = JSON.parse(data.contents);
+                // logic to map parsed.apps to our firebase structure
+                console.log("F-Droid Data Fetched:", parsed);
+            } catch(e) {
+                console.error("F-Droid fetch failed", e);
+            }
+        }
+    </script>
+</body>
+</html>
